@@ -4,15 +4,19 @@ import axios from 'axios';
 function StocksApi() {
   const [stockData, setStockData] = useState();
 
-  useEffect(()=> {
+  useEffect(() => {
     getStockData();
-  }, [])
+  }, []); 
 
-  const getStockData = async () =>{
-    const data = await axios.get("https://storage.googleapis.com/cash-homework/cash-stocks-api/portfolio.json");
-    setStockData(data);
-    console.log(data)
-    console.log("data")
+  const getStockData = async () => {
+    try {
+      const response = await axios.get(`https://storage.googleapis.com/cash-homework/cash-stocks-api/portfolio.json`);
+      console.log("data", response.data);
+      setStockData(response.data);
+
+    } catch (error) {
+      console.error("Error fetching stock data:", error);
+    }
   };
 
   return (
